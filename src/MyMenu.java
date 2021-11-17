@@ -108,7 +108,7 @@ public class MyMenu extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         Scene scene = new Scene(createContent());
-        primaryStage.setTitle("Civilization VI Menu");
+        primaryStage.setTitle("Menu Example");
         primaryStage.setScene(scene);
         primaryStage.show();
     }

@@ -20,8 +20,6 @@ import javafx.scene.image.ImageView;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
-import javax.swing.*;
-import javax.swing.text.html.ImageView;
 
 import java.util.Arrays;
 
