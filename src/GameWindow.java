@@ -1,11 +1,13 @@
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
@@ -19,6 +21,9 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 import javax.swing.*;
+import javax.swing.text.html.ImageView;
+
+import java.util.Arrays;
 
 import static javafx.scene.text.FontWeight.BOLD;
 //import javax.xml.soap.Text;
@@ -83,6 +88,7 @@ public class GameWindow extends Application {
         vbox.setPadding(new Insets(15));
         primaryStage.setScene(new Scene(canvas, 700,700));
         primaryStage.show();
+
 
     }
 
