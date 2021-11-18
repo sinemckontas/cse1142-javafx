@@ -1,6 +1,7 @@
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.geometry.Side;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -52,37 +53,45 @@ public class GameWindow extends Application {
         viewLivesFull3.setFitWidth(30);
 
 
-        Button loadbutton= new Button("Load Previous Game");
-        loadbutton.setPadding(new Insets(0, 200, 0, 0));
 
 
-        HBox hBox1= new HBox();
+
         HBox hBox= new HBox();
 
         hBox.getChildren().addAll(viewLivesFull, viewLivesFull2, viewLivesFull3);
         hBox.setPadding(new Insets(0, 0, 0, 200));
+        hBox.setAlignment(Pos.TOP_RIGHT);
 
-
-        hBox1.getChildren().addAll(loadbutton, hBox);
-        hBox1.setAlignment(Pos.TOP_CENTER);
-
-        Text text= new Text("Welcome to the game\n \n Please select action");
+        Text text= new Text("Hi Adventurer!\n You have been arrested while trespassing to a restricted area.\n The guard waiting in front of your cell has a set of keys hanging from his belt.\n You could try to convince him to let you out since you are just a harmless adventurer.\n Or maybe, you can just put your hand through the bars and steal the keys quietly. \n If you don't think you can do both, you can wait till something happens. \n\n What will you do?");
         text.setStyle("-fx-font-weight: bold");
+        HBox fortext= new HBox();
+        fortext.setAlignment(Pos.TOP_CENTER);
+        fortext.getChildren().add(text);
+        fortext.setBackground(new Background(new BackgroundFill(Color.ANTIQUEWHITE, CornerRadii.EMPTY, Insets.EMPTY)));
+
+
+
+
 
 
 
 
       //  Label label= new Label("this is a label");
+        FileInputStream newImg = new FileInputStream("img/2NQ49.jpg");
+        Image level1b = new Image(newImg);
 
+
+        BackgroundImage level1Back= new BackgroundImage(level1b, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, new BackgroundSize(700,700,false,false,true,true));
 
         Pane canvas = new Pane();
+        canvas.setBackground(new Background(level1Back));
         VBox vbox = new VBox( 100); // spacing = 8
         vbox.setPrefSize(700, 700);
         vbox.setAlignment(Pos.TOP_CENTER);
         canvas.getChildren().add(vbox);
         canvas.setPadding(new Insets(100,100,100,100));
-        vbox.setBackground(new Background(new BackgroundFill(Color.DARKOLIVEGREEN, CornerRadii.EMPTY, Insets.EMPTY)));
-        vbox.getChildren().addAll(hBox1, text, new Button("Attack"), new Button("Defend"), new Button("Wait"));
+        //vbox.setBackground(new Background(new BackgroundFill(Color.DARKOLIVEGREEN, CornerRadii.EMPTY, Insets.EMPTY)));
+        vbox.getChildren().addAll(hBox, fortext, new Button("CONVINCE HIM"), new Button("STEAL THE KEYS"), new Button("WAIT"));
         vbox.setPadding(new Insets(15));
         primaryStage.setScene(new Scene(canvas, 700,700));
         primaryStage.show();
