@@ -91,7 +91,7 @@ public class GameWindow extends Application {
         vbox.setPadding(new Insets(15));
         primaryStage.setScene(new Scene(canvas, WIDTH,HEIGHT));
         primaryStage.show();
-        addBackground(canvas,primaryStage,"background.jpg");
+    //    addBackground(canvas,primaryStage,"background.jpg");
 
 
     }
