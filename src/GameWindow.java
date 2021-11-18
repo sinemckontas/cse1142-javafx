@@ -28,11 +28,16 @@ import static javafx.scene.text.FontWeight.BOLD;
 
 
 public class GameWindow extends Application {
+    final int WIDTH = 640;
+    final int HEIGHT = 480;
+
+
 
 
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+
 
         FileInputStream inputstream = new FileInputStream("img/minecraft-clipart-minecraft-heart.png");
         Image livesfull = new Image(inputstream);
@@ -53,7 +58,7 @@ public class GameWindow extends Application {
 
 
         Button loadbutton= new Button("Load Previous Game");
-        loadbutton.setPadding(new Insets(0, 200, 0, 0));
+        loadbutton.setPadding(new Insets(0, 20, 0, 20));
 
 
         HBox hBox1= new HBox();
@@ -77,19 +82,26 @@ public class GameWindow extends Application {
 
         Pane canvas = new Pane();
         VBox vbox = new VBox( 100); // spacing = 8
-        vbox.setPrefSize(700, 700);
+        vbox.setPrefSize(WIDTH, HEIGHT);
         vbox.setAlignment(Pos.TOP_CENTER);
         canvas.getChildren().add(vbox);
         canvas.setPadding(new Insets(100,100,100,100));
         vbox.setBackground(new Background(new BackgroundFill(Color.DARKOLIVEGREEN, CornerRadii.EMPTY, Insets.EMPTY)));
         vbox.getChildren().addAll(hBox1, text, new Button("Attack"), new Button("Defend"), new Button("Wait"));
         vbox.setPadding(new Insets(15));
-        primaryStage.setScene(new Scene(canvas, 700,700));
+        primaryStage.setScene(new Scene(canvas, WIDTH,HEIGHT));
         primaryStage.show();
+        addBackground(canvas,primaryStage,"background.jpg");
 
 
     }
+    private void addBackground(Pane pane,Stage stage, String fileName){
+        ImageView imageView = new ImageView(new Image(getClass().getResource(fileName).toExternalForm()));
+        imageView.fitWidthProperty().bind(stage.widthProperty());
 
+        pane.getChildren().add(imageView);
+
+    }
 
     public static void main(String[] args) {
         launch(args);
