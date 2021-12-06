@@ -46,9 +46,15 @@ public class GameWindow extends Application {
         FileInputStream newImg = new FileInputStream("img/2NQ49.jpg");
         Image levelimg = new Image(newImg);
 
+        String level1txt= new String("Hi Adventurer!\n You have been arrested while trespassing to a restricted area.\n The guard waiting in front of your cell has a set of keys hanging from his belt.\n You could try to convince him to let you out since you are just a harmless adventurer.\n Or maybe, you can just put your hand through the bars and steal the keys quietly. \n If you don't think you can do both, you can wait till something happens. \n\n What will you do?");
+        String[] options= new String[3];
+        options[0]= "CONVINCE HIM";
+        options[1]="STEAL THE KEYS";
+        options[2]="WAIT";
+
         BackgroundImage levelB= new BackgroundImage(levelimg, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, new BackgroundSize(700,700,false,false,true,true));
         Pane canvas = new Pane();
-        levelCreation(canvas, levelB, livesfull);
+        levelCreation(canvas, levelB, livesfull, level1txt, options);
 
         stg.setScene(new Scene(canvas, 700,700));
         stg.show();
@@ -57,9 +63,15 @@ public class GameWindow extends Application {
         FileInputStream newImg = new FileInputStream("img/level2bgnd.jpg");
         Image levelimg = new Image(newImg);
 
+        String level2txt= new String("this is lvl2");
+        String[] options= new String[3];
+        options[0]= "CONVINCE 2";
+        options[1]="STEAL THE 2";
+        options[2]="WAIT2";
+
         BackgroundImage levelB= new BackgroundImage(levelimg, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, new BackgroundSize(700,700,false,false,true,true));
         Pane canvas = new Pane();
-        levelCreation(canvas, levelB, livesfull);
+        levelCreation(canvas, levelB, livesfull, level2txt, options);
 
         stg.setScene(new Scene(canvas, 700,700));
         stg.show();
@@ -68,9 +80,15 @@ public class GameWindow extends Application {
         FileInputStream newImg = new FileInputStream("img/2NQ49.jpg");
         Image levelimg = new Image(newImg);
 
+        String level3txt= new String("this is lvl3");
+        String[] options= new String[3];
+        options[0]= "CONVINCE 3";
+        options[1]="STEAL THE KEYS3";
+        options[2]="WAIT3";
+
         BackgroundImage levelB= new BackgroundImage(levelimg, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, new BackgroundSize(700,700,false,false,true,true));
         Pane canvas = new Pane();
-        levelCreation(canvas, levelB, livesfull);
+        levelCreation(canvas, levelB, livesfull, level3txt, options);
 
         stg.setScene(new Scene(canvas, 700,700));
         stg.show();
@@ -79,15 +97,21 @@ public class GameWindow extends Application {
         FileInputStream newImg = new FileInputStream("img/2NQ49.jpg");
         Image levelimg = new Image(newImg);
 
+        String level4txt= new String("this is lvl4");
+        String[] options= new String[3];
+        options[0]= "CONVINCE 4";
+        options[1]="STEAL THE KEYS4";
+        options[2]="WAIT4";
+
         BackgroundImage levelB= new BackgroundImage(levelimg, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, new BackgroundSize(700,700,false,false,true,true));
         Pane canvas = new Pane();
-        levelCreation(canvas, levelB, livesfull);
+        levelCreation(canvas, levelB, livesfull, level4txt, options);
 
         stg.setScene(new Scene(canvas, 700,700));
         stg.show();
     }
 
-    public void levelCreation(Pane thepane,BackgroundImage bck, Image crntLives/*, String lvltxt, String[] optns*/){
+    public void levelCreation(Pane thepane,BackgroundImage bck, Image crntLives, String lvltxt, String[] optns){
 
         thepane.setBackground(new Background(bck));
         VBox vbox = new VBox( 100); // spacing = 8
@@ -95,7 +119,7 @@ public class GameWindow extends Application {
         vbox.setAlignment(Pos.TOP_CENTER);
         thepane.getChildren().add(vbox);
         thepane.setPadding(new Insets(100,100,100,100));
-        vbox.getChildren().addAll(currentLives(3,crntLives), levelText(/*lvltxt*/), levelOptions("CONVINCE HIM", "STEAL THE KEYS", "WAIT"));
+        vbox.getChildren().addAll(currentLives(3,crntLives), levelText(lvltxt), levelOptions(optns[0], optns[1], optns[2]));
         vbox.setPadding(new Insets(15));
     }
 
@@ -128,8 +152,8 @@ public class GameWindow extends Application {
         return hBox;
     }
 
-    public HBox levelText(/*String situation*/){
-        Text text= new Text("Hi Adventurer!\n You have been arrested while trespassing to a restricted area.\n The guard waiting in front of your cell has a set of keys hanging from his belt.\n You could try to convince him to let you out since you are just a harmless adventurer.\n Or maybe, you can just put your hand through the bars and steal the keys quietly. \n If you don't think you can do both, you can wait till something happens. \n\n What will you do?");
+    public HBox levelText(String situation){
+        Text text= new Text(situation);
         text.setStyle("-fx-font-weight: bold");
         HBox fortext= new HBox();
         fortext.setAlignment(Pos.TOP_CENTER);
