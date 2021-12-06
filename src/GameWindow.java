@@ -13,6 +13,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.FontWeight;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.scene.text.Text;
 import javafx.scene.text.Font;
@@ -33,18 +34,20 @@ public class GameWindow extends Application {
 
 Stage mainStage;
 int currentLevel = 1;
+int noOfLives=3;
+boolean wrongTxt=false;
 LevelInfo level1 = new LevelInfo("img/2NQ49.jpg",
         "Hi Adventurer!\n You have been arrested while trespassing to a restricted area.\n The guard waiting in front of your cell has a set of keys hanging from his belt.\n You could try to convince him to let you out since you are just a harmless adventurer.\n Or maybe, you can just put your hand through the bars and steal the keys quietly. \n If you don't think you can do both, you can wait till something happens. \n\n What will you do?",
-        new String[] {"CONVINCE HIM", "STEAL THE KEYS", "WAIT"}, "WAIT");
-LevelInfo level2 = new LevelInfo("img/level2bgnd.jpg",
-        "This is level 2",
-        new String[] {"L2O1", "L2O2", "L2O3"}, "L2O2");
-LevelInfo level3 = new LevelInfo("img/level2bgnd.jpg",
-        "This is level 3",
-        new String[] {"L3O1", "L2O2", "L2O3"}, "L2O2");
-LevelInfo level4 = new LevelInfo("img/level2bgnd.jpg",
-        "This is level 4",
-        new String[] {"L4O1", "L2O2", "L2O3"}, "L2O2");
+        new String[] {"CONVINCE HIM", "STEAL THE KEYS", "WAIT"}, "STEAL THE KEYS");
+LevelInfo level2 = new LevelInfo("img/nehir.jpg",
+        "You escaped from the cell and reached the river.\nYou have to cross this cold and rough river. \nYou can use the bridge, try to swim across or build a raft.\n\nWhat will you do?",
+        new String[] {"USE THE BRIDGE", "SWIM ACROSS", "BUILD RAFT"}, "USE THE BRIDGE");
+LevelInfo level3 = new LevelInfo("img/orman.jpg",
+        "You have crossed the river, but the danger has not passed.\nThere is a big cemetery and a forest in front of you.\nYou can hide in the cemetery and wait for things to calm down,\nyou can hide in the forest and continue at night,\nor you can continue through the forest.\n\nWhat will you do?",
+        new String[] {"HIDE IN THE CEMETERY", "HIDE IN THE FOREST", "GO THROUGH THE FOREST"}, "HIDE IN THE FOREST");
+LevelInfo level4 = new LevelInfo("img/sehir.jpg",
+        "You have reached the dark city and you must cross this city to reach your freedom.\nBe careful! Bad things are said about the people of this city.\nYou can wait for the morning to continue,\nask someone in the city for help,\nor you can disguise and continue on your way.\n\nWhat will you do?",
+        new String[] {"WAIT TILL THE MORNING", "ASK FOR HELP", "DISGUISE & CONTINUE"}, "DISGUISE & CONTINUE");
 
 
     @Override
@@ -72,11 +75,41 @@ LevelInfo level4 = new LevelInfo("img/level2bgnd.jpg",
         Button button2 = new Button(levelInfo.getOptionTexts()[1]);
         Button button3 = new Button(levelInfo.getOptionTexts()[2]);
 
+        button1.setOnAction(wrongChoice);
+        button2.setOnAction(wrongChoice);
+        button3.setOnAction(wrongChoice);
         checkCorrect(levelInfo.getCorrectOption(), button1, button2, button3).setOnAction(correctchoice);
 
         Pane canvas = new Pane();
         levelCreation(canvas, backgroundImage, hearts, levelInfo.getLevelText(), button1, button2, button3);
         return new Scene(canvas, 700, 700);
+    }
+
+    public Scene winner() throws FileNotFoundException {
+        FileInputStream imageFile = new FileInputStream("img/win.jpg");
+        Image levelImage = new Image(imageFile);
+        BackgroundImage backgroundImage = new BackgroundImage(levelImage, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, new BackgroundSize(700,700,false,false,true,true));
+        Text text= new Text("FINALLY! FREEDOM!\nYou made the right choices and you're no longer in danger.\nNow you can live far from this land, seeing the sunlight.\nEnjoy your freedom!");
+        text.setStyle("-fx-font-weight: bold");
+        text.setTextAlignment(TextAlignment.CENTER);
+
+        StackPane spane= new StackPane();
+        spane.setBackground(new Background(backgroundImage));
+        spane.setAlignment(Pos.CENTER);
+        spane.getChildren().add(text);
+
+        return new Scene(spane, 700, 700);
+    }
+
+    public Scene loser() throws FileNotFoundException {
+        FileInputStream imageFile = new FileInputStream("img/youdied.png");
+        Image levelImage = new Image(imageFile);
+        BackgroundImage backgroundImage = new BackgroundImage(levelImage, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, new BackgroundSize(700,700,false,false,true,true));
+        StackPane spane= new StackPane();
+        spane.setBackground(new Background(backgroundImage));
+        spane.setAlignment(Pos.CENTER);
+
+        return new Scene(spane, 700, 700);
     }
 
     public LevelInfo getLevelInfo(int levelNo) {
@@ -114,7 +147,7 @@ LevelInfo level4 = new LevelInfo("img/level2bgnd.jpg",
         vbox.setAlignment(Pos.TOP_CENTER);
         thepane.getChildren().add(vbox);
         thepane.setPadding(new Insets(100,100,100,100));
-        vbox.getChildren().addAll(currentLives(3,crntLives), levelText(lvltxt), levelOptions(b1, b2, b3),muteButton);
+        vbox.getChildren().addAll(currentLives(noOfLives,crntLives), levelText(lvltxt), levelOptions(b1, b2, b3),muteButton);
         vbox.setPadding(new Insets(15));
     }
 
@@ -171,12 +204,48 @@ LevelInfo level4 = new LevelInfo("img/level2bgnd.jpg",
 
 
     EventHandler<ActionEvent> correctchoice = e -> {
-        currentLevel += 1;
-        try {
-            mainStage.setScene(generateLevel(currentLevel));
-        } catch (FileNotFoundException fileNotFoundException) {
-            fileNotFoundException.printStackTrace();
+        wrongTxt=false;
+        if(currentLevel!=4){
+            currentLevel += 1;
+            try {
+                mainStage.setScene(generateLevel(currentLevel));
+            } catch (FileNotFoundException fileNotFoundException) {
+                fileNotFoundException.printStackTrace();
+            }
         }
+        else {
+            try {
+                mainStage.setScene(winner());
+            } catch (FileNotFoundException fileNotFoundException) {
+                fileNotFoundException.printStackTrace();
+            }
+        }
+
+    };
+
+    EventHandler<ActionEvent> wrongChoice = e -> {
+        if (noOfLives>1 ){
+            if(!wrongTxt){
+                getLevelInfo(currentLevel).setLevelText(getLevelInfo(currentLevel).getLevelText()+"\n\n WRONG MOVE! TRY AGAIN!");
+                wrongTxt= true;
+            }
+            try {
+                noOfLives--;
+                mainStage.setScene(generateLevel(currentLevel));
+            } catch (FileNotFoundException fileNotFoundException) {
+                fileNotFoundException.printStackTrace();
+            }
+        }
+        else{
+            try {
+                mainStage.setScene(loser());
+            } catch (FileNotFoundException fileNotFoundException) {
+                fileNotFoundException.printStackTrace();
+            }
+
+        }
+
+
     };
 
 
