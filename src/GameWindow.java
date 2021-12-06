@@ -32,7 +32,7 @@ import static javafx.scene.text.FontWeight.BOLD;
 
 public class GameWindow extends Application {
 
-
+Stage mainStage;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -40,6 +40,7 @@ public class GameWindow extends Application {
         FileInputStream inputstream = new FileInputStream("img/minecraft-clipart-minecraft-heart.png");
         Image hearts = new Image(inputstream);
 
+        mainStage = primaryStage;
         primaryStage.setScene(lvl1(hearts));
         primaryStage.show();
 
@@ -145,18 +146,17 @@ public class GameWindow extends Application {
     }
 
     public Button checkCorrect (String cB,Button fB,Button sB,Button tB){
-        if (cB.equalsIgnoreCase(fB.toString())){
+        if (cB.equalsIgnoreCase(fB.getText())){
             return fB;
         }
-        else if (cB.equalsIgnoreCase(sB.toString())){
+        else if (cB.equalsIgnoreCase(sB.getText())){
             return sB;
         }
-        else if (cB.equalsIgnoreCase(tB.toString())){
+        else if (cB.equalsIgnoreCase(tB.getText())){
             return tB;
         }
         else {
-            Button bruh= new Button(" ");
-            return bruh;
+            throw new RuntimeException("Correct choice string was not found among the given buttons.");
         }
     }
 
@@ -197,11 +197,14 @@ public class GameWindow extends Application {
     }
 
 
-    EventHandler<ActionEvent> correctchoice = new EventHandler<ActionEvent>() {
-        public void handle(ActionEvent e)
-        {
-
-            //l.setText("   button   selected    ");
+    EventHandler<ActionEvent> correctchoice = e -> {
+        FileInputStream inputstream = null;
+        try {
+            inputstream = new FileInputStream("img/minecraft-clipart-minecraft-heart.png");
+            Image hearts = new Image(inputstream);
+            mainStage.setScene(lvl2(hearts));
+        } catch (FileNotFoundException fileNotFoundException) {
+            fileNotFoundException.printStackTrace();
         }
     };
 
