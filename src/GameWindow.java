@@ -168,7 +168,7 @@ LevelInfo level4 = new LevelInfo("img/level2bgnd.jpg",
     public HBox levelText(String situation){
         Text text= new Text(situation);
      //   text.setStyle("-fx-font-weight: bold");
-        text.setFont(Font.loadFont("file:font/Welbut.ttf",11));
+        text.setFont(Font.loadFont("file:font/Welbut.ttf",12));
         HBox fortext= new HBox();
         fortext.setStyle("-fx-padding:10");
         fortext.setAlignment(Pos.CENTER);
