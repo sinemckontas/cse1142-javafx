@@ -18,6 +18,8 @@ import javafx.scene.text.Text;
 import javafx.scene.text.Font;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import javafx.event.ActionEvent;
@@ -113,8 +115,8 @@ LevelInfo level4 = new LevelInfo("img/level2bgnd.jpg",
 
         thepane.setBackground(new Background(bck));
         thepane.setBackground(new Background(bck));
-        VBox vbox = new VBox( 100); // spacing = 8
-        vbox.setPrefSize(700, 700);
+        VBox vbox = new VBox( 100);
+        vbox.setPrefSize(700, 900);
         vbox.setAlignment(Pos.TOP_CENTER);
         thepane.getChildren().add(vbox);
         thepane.setPadding(new Insets(100,100,100,100));
@@ -165,11 +167,21 @@ LevelInfo level4 = new LevelInfo("img/level2bgnd.jpg",
 
     public HBox levelText(String situation){
         Text text= new Text(situation);
-        text.setStyle("-fx-font-weight: bold");
+     //   text.setStyle("-fx-font-weight: bold");
+        text.setFont(Font.loadFont("file:font/Welbut.ttf",11));
         HBox fortext= new HBox();
-        fortext.setAlignment(Pos.TOP_CENTER);
+        fortext.setStyle("-fx-padding:10");
+        fortext.setAlignment(Pos.CENTER);
         fortext.getChildren().add(text);
-        fortext.setBackground(new Background(new BackgroundFill(Color.ANTIQUEWHITE, CornerRadii.EMPTY, Insets.EMPTY)));
+        BackgroundSize boxSize = new BackgroundSize(300, 200, true, true, false, false);
+        BackgroundImage imageBackground = new BackgroundImage(new Image(new File("img/1216.png").toURI().toString()),
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.DEFAULT,
+                boxSize);
+        fortext.setBackground(new Background(imageBackground));
+
+     //    fortext.setBackground(new Background(new BackgroundFill(Color.ANTIQUEWHITE, CornerRadii.EMPTY, Insets.EMPTY)));
         return fortext;
     }
 
