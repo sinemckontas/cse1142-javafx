@@ -40,6 +40,12 @@ LevelInfo level1 = new LevelInfo("img/2NQ49.jpg",
 LevelInfo level2 = new LevelInfo("img/level2bgnd.jpg",
         "This is level 2",
         new String[] {"L2O1", "L2O2", "L2O3"}, "L2O2");
+LevelInfo level3 = new LevelInfo("img/level2bgnd.jpg",
+        "This is level 3",
+        new String[] {"L3O1", "L2O2", "L2O3"}, "L2O2");
+LevelInfo level4 = new LevelInfo("img/level2bgnd.jpg",
+        "This is level 4",
+        new String[] {"L4O1", "L2O2", "L2O3"}, "L2O2");
 
 
     @Override
@@ -78,95 +84,17 @@ LevelInfo level2 = new LevelInfo("img/level2bgnd.jpg",
         else if (levelNo == 2) {
             return level2;
         }
+        else if (levelNo == 3) {
+            return level3;
+        }
+        else if (levelNo == 4) {
+            return level4;
+        }
+
         return null;
     }
 
-    public Scene lvl1(Image livesfull) throws FileNotFoundException {
-        Scene sc;
-        FileInputStream newImg = new FileInputStream("img/2NQ49.jpg");
-        Image levelimg = new Image(newImg);
 
-        String level1txt= new String("Hi Adventurer!\n You have been arrested while trespassing to a restricted area.\n The guard waiting in front of your cell has a set of keys hanging from his belt.\n You could try to convince him to let you out since you are just a harmless adventurer.\n Or maybe, you can just put your hand through the bars and steal the keys quietly. \n If you don't think you can do both, you can wait till something happens. \n\n What will you do?");
-
-        Button button1= new Button("CONVINCE HIM");
-        Button button2= new Button("STEAL THE KEYS");
-        Button button3= new Button("WAIT");
-
-        String correctoption="WAIT";
-
-        checkCorrect(correctoption,button1, button2, button3).setOnAction(correctchoice);
-
-
-        BackgroundImage levelB= new BackgroundImage(levelimg, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, new BackgroundSize(700,700,false,false,true,true));
-        Pane canvas = new Pane();
-        levelCreation(canvas, levelB, livesfull, level1txt, button1, button2, button3);
-
-
-        sc = new Scene(canvas, 700, 700);
-
-        return sc;
-    }
-    public Scene lvl2(Image livesfull) throws FileNotFoundException{
-        Scene sc;
-        FileInputStream newImg = new FileInputStream("img/level2bgnd.jpg");
-        Image levelimg = new Image(newImg);
-
-        String level2txt= new String("this is lvl2");
-        Button button1= new Button("CONVINCE 2");
-        Button button2= new Button("STEAL THE 2");
-        Button button3= new Button("WAIT");
-
-        String correctoption="WAIT";
-
-        BackgroundImage levelB= new BackgroundImage(levelimg, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, new BackgroundSize(700,700,false,false,true,true));
-        Pane canvas = new Pane();
-        levelCreation(canvas, levelB, livesfull, level2txt,  button1, button2, button3);
-
-        sc = new Scene(canvas, 700, 700);
-
-        return sc;
-    }
-    public Scene lvl3(Stage stg, Image livesfull) throws FileNotFoundException{
-        Scene sc;
-        FileInputStream newImg = new FileInputStream("img/2NQ49.jpg");
-        Image levelimg = new Image(newImg);
-
-        String level3txt= new String("this is lvl3");
-        Button button1= new Button("CONVINCE 3");
-        Button button2= new Button("STEAL THE 3");
-        Button button3= new Button("WAIT");
-        String correctoption="WAIT";
-
-
-        BackgroundImage levelB= new BackgroundImage(levelimg, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, new BackgroundSize(700,700,false,false,true,true));
-        Pane canvas = new Pane();
-        levelCreation(canvas, levelB, livesfull, level3txt,  button1, button2, button3);
-
-        sc = new Scene(canvas, 700, 700);
-
-        return sc;
-    }
-    public Scene lvl4(Stage stg, Image livesfull) throws FileNotFoundException{
-        Scene sc;
-        FileInputStream newImg = new FileInputStream("img/2NQ49.jpg");
-        Image levelimg = new Image(newImg);
-
-        String level4txt= new String("this is lvl4");
-        Button button1= new Button("CONVINCE 4");
-        Button button2= new Button("STEAL THE 4");
-        Button button3= new Button("WAIT");
-
-        String correctoption="WAIT";
-
-        BackgroundImage levelB= new BackgroundImage(levelimg, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, new BackgroundSize(700,700,false,false,true,true));
-        Pane canvas = new Pane();
-        levelCreation(canvas, levelB, livesfull, level4txt,  button1, button2, button3);
-
-        sc = new Scene(canvas, 700, 700);
-
-        return sc;
-
-    }
 
     public void levelCreation(Pane thepane,BackgroundImage bck, Image crntLives, String lvltxt, Button b1, Button b2, Button b3){
 
