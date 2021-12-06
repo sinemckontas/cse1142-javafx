@@ -23,7 +23,6 @@ import java.io.FileNotFoundException;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 
-
 import java.util.Arrays;
 
 import static javafx.scene.text.FontWeight.BOLD;
@@ -52,7 +51,10 @@ LevelInfo level4 = new LevelInfo("img/level2bgnd.jpg",
     public void start(Stage primaryStage) throws Exception {
         mainStage = primaryStage;
         primaryStage.setScene(generateLevel(currentLevel));
+        primaryStage.setResizable(false);
+        primaryStage.setTitle("Dungeon");
         primaryStage.show();
+
 
     }
 
@@ -98,13 +100,21 @@ LevelInfo level4 = new LevelInfo("img/level2bgnd.jpg",
 
     public void levelCreation(Pane thepane,BackgroundImage bck, Image crntLives, String lvltxt, Button b1, Button b2, Button b3){
 
+        Button muteButton = new Button(AudioPlay.muteCondition);
+      //  muteButton.textProperty().bind(AudioPlay.muteCondition);
+        muteButton.setLayoutX(20);
+        muteButton.setLayoutY(20);
+        muteButton.setOnMousePressed(e -> AudioPlay.mute());
+
+
+        thepane.setBackground(new Background(bck));
         thepane.setBackground(new Background(bck));
         VBox vbox = new VBox( 100); // spacing = 8
         vbox.setPrefSize(700, 700);
         vbox.setAlignment(Pos.TOP_CENTER);
         thepane.getChildren().add(vbox);
         thepane.setPadding(new Insets(100,100,100,100));
-        vbox.getChildren().addAll(currentLives(3,crntLives), levelText(lvltxt), levelOptions(b1, b2, b3));
+        vbox.getChildren().addAll(currentLives(3,crntLives), levelText(lvltxt), levelOptions(b1, b2, b3),muteButton);
         vbox.setPadding(new Insets(15));
     }
 
