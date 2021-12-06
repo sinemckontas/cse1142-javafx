@@ -36,67 +36,106 @@ public class GameWindow extends Application {
     public void start(Stage primaryStage) throws Exception {
 
         FileInputStream inputstream = new FileInputStream("img/minecraft-clipart-minecraft-heart.png");
-        Image livesfull = new Image(inputstream);
+        Image hearts = new Image(inputstream);
+
+        lvl1(primaryStage, hearts);
+
+    }
+
+    public void lvl1(Stage stg, Image livesfull) throws FileNotFoundException {
+        FileInputStream newImg = new FileInputStream("img/2NQ49.jpg");
+        Image levelimg = new Image(newImg);
+
+        BackgroundImage levelB= new BackgroundImage(levelimg, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, new BackgroundSize(700,700,false,false,true,true));
+        Pane canvas = new Pane();
+        levelCreation(canvas, levelB, livesfull);
+
+        stg.setScene(new Scene(canvas, 700,700));
+        stg.show();
+    }
+    public void lvl2(Stage stg, Image livesfull) throws FileNotFoundException{
+        FileInputStream newImg = new FileInputStream("img/level2bgnd.jpg");
+        Image levelimg = new Image(newImg);
+
+        BackgroundImage levelB= new BackgroundImage(levelimg, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, new BackgroundSize(700,700,false,false,true,true));
+        Pane canvas = new Pane();
+        levelCreation(canvas, levelB, livesfull);
+
+        stg.setScene(new Scene(canvas, 700,700));
+        stg.show();
+    }
+    public void lvl3(Stage stg, Image livesfull) throws FileNotFoundException{
+        FileInputStream newImg = new FileInputStream("img/2NQ49.jpg");
+        Image levelimg = new Image(newImg);
+
+        BackgroundImage levelB= new BackgroundImage(levelimg, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, new BackgroundSize(700,700,false,false,true,true));
+        Pane canvas = new Pane();
+        levelCreation(canvas, levelB, livesfull);
+
+        stg.setScene(new Scene(canvas, 700,700));
+        stg.show();
+    }
+    public void lvl4(Stage stg, Image livesfull) throws FileNotFoundException{
+        FileInputStream newImg = new FileInputStream("img/2NQ49.jpg");
+        Image levelimg = new Image(newImg);
+
+        BackgroundImage levelB= new BackgroundImage(levelimg, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, new BackgroundSize(700,700,false,false,true,true));
+        Pane canvas = new Pane();
+        levelCreation(canvas, levelB, livesfull);
+
+        stg.setScene(new Scene(canvas, 700,700));
+        stg.show();
+    }
+
+    public void levelCreation(Pane thepane,BackgroundImage bck, Image crntLives/*, String lvltxt, String[] optns*/){
+
+        thepane.setBackground(new Background(bck));
+        VBox vbox = new VBox( 100); // spacing = 8
+        vbox.setPrefSize(700, 700);
+        vbox.setAlignment(Pos.TOP_CENTER);
+        thepane.getChildren().add(vbox);
+        thepane.setPadding(new Insets(100,100,100,100));
+        vbox.getChildren().addAll(currentLives(3,crntLives), levelText(/*lvltxt*/), levelOptions("CONVINCE HIM", "STEAL THE KEYS", "WAIT"));
+        vbox.setPadding(new Insets(15));
+    }
 
 
-        ImageView viewLivesFull = new ImageView(livesfull);
-        ImageView viewLivesFull2= new ImageView(livesfull);
-        ImageView viewLivesFull3= new ImageView(livesfull);
 
+    public VBox levelOptions(String first, String second, String third) {
+        VBox forButtons= new VBox();
+        Button one= new Button(first);
+        Button two= new Button(second);
+        Button three= new Button(third);
+        forButtons.getChildren().addAll(one, two, three);
+        forButtons.setAlignment(Pos.CENTER);
+        forButtons.setSpacing(50);
 
+        return forButtons;
+    }
 
-        viewLivesFull.setFitHeight(30);
-        viewLivesFull.setFitWidth(30);
-        viewLivesFull2.setFitHeight(30);
-        viewLivesFull2.setFitWidth(30);
-        viewLivesFull3.setFitHeight(30);
-        viewLivesFull3.setFitWidth(30);
-
-
-
-
-
+    public HBox currentLives(int howmanylives, Image hearts){
+        int i=0;
+        ImageView[] liVes= new ImageView[howmanylives];
+        for(;i<howmanylives; i++){
+            liVes[i] = new ImageView(hearts);
+            liVes[i].setFitHeight(30);
+            liVes[i].setFitWidth(30);
+        }
         HBox hBox= new HBox();
-
-        hBox.getChildren().addAll(viewLivesFull, viewLivesFull2, viewLivesFull3);
+        hBox.getChildren().addAll(liVes);
         hBox.setPadding(new Insets(0, 0, 0, 200));
         hBox.setAlignment(Pos.TOP_RIGHT);
+        return hBox;
+    }
 
+    public HBox levelText(/*String situation*/){
         Text text= new Text("Hi Adventurer!\n You have been arrested while trespassing to a restricted area.\n The guard waiting in front of your cell has a set of keys hanging from his belt.\n You could try to convince him to let you out since you are just a harmless adventurer.\n Or maybe, you can just put your hand through the bars and steal the keys quietly. \n If you don't think you can do both, you can wait till something happens. \n\n What will you do?");
         text.setStyle("-fx-font-weight: bold");
         HBox fortext= new HBox();
         fortext.setAlignment(Pos.TOP_CENTER);
         fortext.getChildren().add(text);
         fortext.setBackground(new Background(new BackgroundFill(Color.ANTIQUEWHITE, CornerRadii.EMPTY, Insets.EMPTY)));
-
-
-
-
-
-
-
-
-      //  Label label= new Label("this is a label");
-        FileInputStream newImg = new FileInputStream("img/2NQ49.jpg");
-        Image level1b = new Image(newImg);
-
-
-        BackgroundImage level1Back= new BackgroundImage(level1b, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, new BackgroundSize(700,700,false,false,true,true));
-
-        Pane canvas = new Pane();
-        canvas.setBackground(new Background(level1Back));
-        VBox vbox = new VBox( 100); // spacing = 8
-        vbox.setPrefSize(700, 700);
-        vbox.setAlignment(Pos.TOP_CENTER);
-        canvas.getChildren().add(vbox);
-        canvas.setPadding(new Insets(100,100,100,100));
-        //vbox.setBackground(new Background(new BackgroundFill(Color.DARKOLIVEGREEN, CornerRadii.EMPTY, Insets.EMPTY)));
-        vbox.getChildren().addAll(hBox, fortext, new Button("CONVINCE HIM"), new Button("STEAL THE KEYS"), new Button("WAIT"));
-        vbox.setPadding(new Insets(15));
-        primaryStage.setScene(new Scene(canvas, 700,700));
-        primaryStage.show();
-
-
+        return fortext;
     }
 
 
