@@ -3,12 +3,13 @@ import javafx.scene.media.MediaPlayer;
 
 import java.io.File;
 
-public class AudioPlay {
+public class AudioPlay<muteCondition> {
 
     private static Media mainTheme = new Media(new File("audio/theme.mp3").toURI().toString());
-    private static MediaPlayer mainPlayer = new MediaPlayer(mainTheme);
+     static MediaPlayer mainPlayer = new MediaPlayer(mainTheme);
     static boolean isMute = false;
-    static String muteCondition;
+    public static String muteCondition;
+
 
     public static void setMuteCondition() {
         if(AudioPlay.muteCondition.equals("MUTE")){
@@ -20,20 +21,22 @@ public class AudioPlay {
     }
 
 
-    private static void play(MediaPlayer playerInput){
+     static void play(MediaPlayer playerInput){
         playerInput.play();
     }
-    private static void stop(MediaPlayer playerInput) {
+     static void stop(MediaPlayer playerInput) {
         playerInput.stop();
     }
    public static void mute(){
     if (!isMute){
         mainPlayer.setMute(true);
-        muteCondition = "UNMUTE";
+        AudioPlay.muteCondition = "UNMUTE";
+        AudioPlay.isMute = true;
     }
     else {
         mainPlayer.setMute(false);
-        muteCondition = "MUTE";
+        AudioPlay.muteCondition = "MUTE";
+        AudioPlay.isMute = false;
     }
     setMuteCondition();
     }
