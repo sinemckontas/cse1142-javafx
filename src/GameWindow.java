@@ -99,12 +99,16 @@ LevelInfo level4 = new LevelInfo("img/level2bgnd.jpg",
 
 
     public void levelCreation(Pane thepane,BackgroundImage bck, Image crntLives, String lvltxt, Button b1, Button b2, Button b3){
-
+        AudioPlay.play(AudioPlay.mainPlayer);
+        AudioPlay.muteCondition = "MUTE";
         Button muteButton = new Button(AudioPlay.muteCondition);
-      //  muteButton.textProperty().bind(AudioPlay.muteCondition);
+ //       muteButton.textProperty().bind(AudioPlay.muteCondition);
         muteButton.setLayoutX(20);
         muteButton.setLayoutY(20);
-        muteButton.setOnMousePressed(e -> AudioPlay.mute());
+        muteButton.setOnMousePressed(e -> {
+            AudioPlay.mute();
+            muteButton.setText(AudioPlay.muteCondition);
+        });
 
 
         thepane.setBackground(new Background(bck));
