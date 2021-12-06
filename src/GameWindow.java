@@ -20,6 +20,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 
 
 import java.util.Arrays;
@@ -38,80 +40,99 @@ public class GameWindow extends Application {
         FileInputStream inputstream = new FileInputStream("img/minecraft-clipart-minecraft-heart.png");
         Image hearts = new Image(inputstream);
 
-        lvl1(primaryStage, hearts);
+        primaryStage.setScene(lvl1(hearts));
+        primaryStage.show();
 
     }
 
-    public void lvl1(Stage stg, Image livesfull) throws FileNotFoundException {
+    public Scene lvl1(Image livesfull) throws FileNotFoundException {
+        Scene sc;
         FileInputStream newImg = new FileInputStream("img/2NQ49.jpg");
         Image levelimg = new Image(newImg);
 
         String level1txt= new String("Hi Adventurer!\n You have been arrested while trespassing to a restricted area.\n The guard waiting in front of your cell has a set of keys hanging from his belt.\n You could try to convince him to let you out since you are just a harmless adventurer.\n Or maybe, you can just put your hand through the bars and steal the keys quietly. \n If you don't think you can do both, you can wait till something happens. \n\n What will you do?");
-        String[] options= new String[3];
-        options[0]= "CONVINCE HIM";
-        options[1]="STEAL THE KEYS";
-        options[2]="WAIT";
+
+        Button button1= new Button("CONVINCE HIM");
+        Button button2= new Button("STEAL THE KEYS");
+        Button button3= new Button("WAIT");
+
+        String correctoption="WAIT";
+
+        checkCorrect(correctoption,button1, button2, button3).setOnAction(correctchoice);
+
 
         BackgroundImage levelB= new BackgroundImage(levelimg, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, new BackgroundSize(700,700,false,false,true,true));
         Pane canvas = new Pane();
-        levelCreation(canvas, levelB, livesfull, level1txt, options);
+        levelCreation(canvas, levelB, livesfull, level1txt, button1, button2, button3);
 
-        stg.setScene(new Scene(canvas, 700,700));
-        stg.show();
+
+        sc = new Scene(canvas, 700, 700);
+
+        return sc;
     }
-    public void lvl2(Stage stg, Image livesfull) throws FileNotFoundException{
+    public Scene lvl2(Image livesfull) throws FileNotFoundException{
+        Scene sc;
         FileInputStream newImg = new FileInputStream("img/level2bgnd.jpg");
         Image levelimg = new Image(newImg);
 
         String level2txt= new String("this is lvl2");
-        String[] options= new String[3];
-        options[0]= "CONVINCE 2";
-        options[1]="STEAL THE 2";
-        options[2]="WAIT2";
+        Button button1= new Button("CONVINCE 2");
+        Button button2= new Button("STEAL THE 2");
+        Button button3= new Button("WAIT");
+
+        String correctoption="WAIT";
 
         BackgroundImage levelB= new BackgroundImage(levelimg, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, new BackgroundSize(700,700,false,false,true,true));
         Pane canvas = new Pane();
-        levelCreation(canvas, levelB, livesfull, level2txt, options);
+        levelCreation(canvas, levelB, livesfull, level2txt,  button1, button2, button3);
 
-        stg.setScene(new Scene(canvas, 700,700));
-        stg.show();
+        sc = new Scene(canvas, 700, 700);
+
+        return sc;
     }
-    public void lvl3(Stage stg, Image livesfull) throws FileNotFoundException{
+    public Scene lvl3(Stage stg, Image livesfull) throws FileNotFoundException{
+        Scene sc;
         FileInputStream newImg = new FileInputStream("img/2NQ49.jpg");
         Image levelimg = new Image(newImg);
 
         String level3txt= new String("this is lvl3");
-        String[] options= new String[3];
-        options[0]= "CONVINCE 3";
-        options[1]="STEAL THE KEYS3";
-        options[2]="WAIT3";
+        Button button1= new Button("CONVINCE 3");
+        Button button2= new Button("STEAL THE 3");
+        Button button3= new Button("WAIT");
+        String correctoption="WAIT";
+
 
         BackgroundImage levelB= new BackgroundImage(levelimg, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, new BackgroundSize(700,700,false,false,true,true));
         Pane canvas = new Pane();
-        levelCreation(canvas, levelB, livesfull, level3txt, options);
+        levelCreation(canvas, levelB, livesfull, level3txt,  button1, button2, button3);
 
-        stg.setScene(new Scene(canvas, 700,700));
-        stg.show();
+        sc = new Scene(canvas, 700, 700);
+
+        return sc;
     }
-    public void lvl4(Stage stg, Image livesfull) throws FileNotFoundException{
+    public Scene lvl4(Stage stg, Image livesfull) throws FileNotFoundException{
+        Scene sc;
         FileInputStream newImg = new FileInputStream("img/2NQ49.jpg");
         Image levelimg = new Image(newImg);
 
         String level4txt= new String("this is lvl4");
-        String[] options= new String[3];
-        options[0]= "CONVINCE 4";
-        options[1]="STEAL THE KEYS4";
-        options[2]="WAIT4";
+        Button button1= new Button("CONVINCE 4");
+        Button button2= new Button("STEAL THE 4");
+        Button button3= new Button("WAIT");
+
+        String correctoption="WAIT";
 
         BackgroundImage levelB= new BackgroundImage(levelimg, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, new BackgroundSize(700,700,false,false,true,true));
         Pane canvas = new Pane();
-        levelCreation(canvas, levelB, livesfull, level4txt, options);
+        levelCreation(canvas, levelB, livesfull, level4txt,  button1, button2, button3);
 
-        stg.setScene(new Scene(canvas, 700,700));
-        stg.show();
+        sc = new Scene(canvas, 700, 700);
+
+        return sc;
+
     }
 
-    public void levelCreation(Pane thepane,BackgroundImage bck, Image crntLives, String lvltxt, String[] optns){
+    public void levelCreation(Pane thepane,BackgroundImage bck, Image crntLives, String lvltxt, Button b1, Button b2, Button b3){
 
         thepane.setBackground(new Background(bck));
         VBox vbox = new VBox( 100); // spacing = 8
@@ -119,18 +140,31 @@ public class GameWindow extends Application {
         vbox.setAlignment(Pos.TOP_CENTER);
         thepane.getChildren().add(vbox);
         thepane.setPadding(new Insets(100,100,100,100));
-        vbox.getChildren().addAll(currentLives(3,crntLives), levelText(lvltxt), levelOptions(optns[0], optns[1], optns[2]));
+        vbox.getChildren().addAll(currentLives(3,crntLives), levelText(lvltxt), levelOptions(b1, b2, b3));
         vbox.setPadding(new Insets(15));
+    }
+
+    public Button checkCorrect (String cB,Button fB,Button sB,Button tB){
+        if (cB.equalsIgnoreCase(fB.toString())){
+            return fB;
+        }
+        else if (cB.equalsIgnoreCase(sB.toString())){
+            return sB;
+        }
+        else if (cB.equalsIgnoreCase(tB.toString())){
+            return tB;
+        }
+        else {
+            Button bruh= new Button(" ");
+            return bruh;
+        }
     }
 
 
 
-    public VBox levelOptions(String first, String second, String third) {
+    public VBox levelOptions(Button first, Button mid, Button last) {
         VBox forButtons= new VBox();
-        Button one= new Button(first);
-        Button two= new Button(second);
-        Button three= new Button(third);
-        forButtons.getChildren().addAll(one, two, three);
+        forButtons.getChildren().addAll(first, mid, last);
         forButtons.setAlignment(Pos.CENTER);
         forButtons.setSpacing(50);
 
@@ -161,6 +195,17 @@ public class GameWindow extends Application {
         fortext.setBackground(new Background(new BackgroundFill(Color.ANTIQUEWHITE, CornerRadii.EMPTY, Insets.EMPTY)));
         return fortext;
     }
+
+
+    EventHandler<ActionEvent> correctchoice = new EventHandler<ActionEvent>() {
+        public void handle(ActionEvent e)
+        {
+
+            //l.setText("   button   selected    ");
+        }
+    };
+
+
 
 
     public static void main(String[] args) {
