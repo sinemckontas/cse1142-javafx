@@ -33,17 +33,52 @@ import static javafx.scene.text.FontWeight.BOLD;
 public class GameWindow extends Application {
 
 Stage mainStage;
+int currentLevel = 1;
+LevelInfo level1 = new LevelInfo("img/2NQ49.jpg",
+        "Hi Adventurer!\n You have been arrested while trespassing to a restricted area.\n The guard waiting in front of your cell has a set of keys hanging from his belt.\n You could try to convince him to let you out since you are just a harmless adventurer.\n Or maybe, you can just put your hand through the bars and steal the keys quietly. \n If you don't think you can do both, you can wait till something happens. \n\n What will you do?",
+        new String[] {"CONVINCE HIM", "STEAL THE KEYS", "WAIT"}, "WAIT");
+LevelInfo level2 = new LevelInfo("img/level2bgnd.jpg",
+        "This is level 2",
+        new String[] {"L2O1", "L2O2", "L2O3"}, "L2O2");
+
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        mainStage = primaryStage;
+        primaryStage.setScene(generateLevel(currentLevel));
+        primaryStage.show();
+
+    }
+
+    public Scene generateLevel(int levelNo) throws FileNotFoundException {
+        LevelInfo levelInfo = getLevelInfo(levelNo);
 
         FileInputStream inputstream = new FileInputStream("img/minecraft-clipart-minecraft-heart.png");
         Image hearts = new Image(inputstream);
 
-        mainStage = primaryStage;
-        primaryStage.setScene(lvl1(hearts));
-        primaryStage.show();
+        FileInputStream imageFile = new FileInputStream(levelInfo.getBackgroundImagePath());
+        Image levelImage = new Image(imageFile);
+        BackgroundImage backgroundImage = new BackgroundImage(levelImage, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, new BackgroundSize(700,700,false,false,true,true));
 
+        Button button1 = new Button(levelInfo.getOptionTexts()[0]);
+        Button button2 = new Button(levelInfo.getOptionTexts()[1]);
+        Button button3 = new Button(levelInfo.getOptionTexts()[2]);
+
+        checkCorrect(levelInfo.getCorrectOption(), button1, button2, button3).setOnAction(correctchoice);
+
+        Pane canvas = new Pane();
+        levelCreation(canvas, backgroundImage, hearts, levelInfo.getLevelText(), button1, button2, button3);
+        return new Scene(canvas, 700, 700);
+    }
+
+    public LevelInfo getLevelInfo(int levelNo) {
+        if (levelNo == 1) {
+            return level1;
+        }
+        else if (levelNo == 2) {
+            return level2;
+        }
+        return null;
     }
 
     public Scene lvl1(Image livesfull) throws FileNotFoundException {
@@ -198,11 +233,9 @@ Stage mainStage;
 
 
     EventHandler<ActionEvent> correctchoice = e -> {
-        FileInputStream inputstream = null;
+        currentLevel += 1;
         try {
-            inputstream = new FileInputStream("img/minecraft-clipart-minecraft-heart.png");
-            Image hearts = new Image(inputstream);
-            mainStage.setScene(lvl2(hearts));
+            mainStage.setScene(generateLevel(currentLevel));
         } catch (FileNotFoundException fileNotFoundException) {
             fileNotFoundException.printStackTrace();
         }
