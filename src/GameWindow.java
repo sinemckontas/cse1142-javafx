@@ -39,12 +39,12 @@ int currentLevel = 1;
 int noOfLives=3;
 boolean wrongTxt=false;
 LevelInfo level1 = new LevelInfo("img/2NQ49.jpg",
-        "Hi Adventurer!\n You have been arrested while trespassing to a restricted area.\n The guard waiting in front of your cell has a set of keys hanging from his belt.\n You could try to convince him to let you out since you are just a harmless adventurer.\n Or maybe, you can just put your hand through the bars and steal the keys quietly. \n If you don't think you can do both, you can wait till something happens. \n\n What will you do?",
+        "Hi Adventurer!\n You have been arrested while trespassing in a restricted area.\n The guard waiting in front of your cell has a set of keys hanging from his belt.\n You could try to convince him to let you out since you are just a harmless adventurer.\n Or maybe, you can just put your hand through the bars and steal the keys quietly. \n If you don't think you can do both, you can wait till something happens. \n\n What will you do?",
         new String[] {"CONVINCE HIM", "STEAL THE KEYS", "WAIT"}, "STEAL THE KEYS");
-LevelInfo level2 = new LevelInfo("img/nehir.jpg",
+LevelInfo level2 = new LevelInfo("img/river2.jpg",
         "You escaped from the cell and reached the river.\nYou have to cross this cold and rough river. \nYou can use the bridge, try to swim across or build a raft.\n\nWhat will you do?",
         new String[] {"USE THE BRIDGE", "SWIM ACROSS", "BUILD RAFT"}, "USE THE BRIDGE");
-LevelInfo level3 = new LevelInfo("img/orman.jpg",
+LevelInfo level3 = new LevelInfo("img/cm2.jpg",
         "You have crossed the river, but the danger has not passed.\nThere is a big cemetery and a forest in front of you.\nYou can hide in the cemetery and wait for things to calm down,\nyou can hide in the forest and continue at night,\nor you can continue through the forest.\n\nWhat will you do?",
         new String[] {"HIDE IN THE CEMETERY", "HIDE IN THE FOREST", "GO THROUGH THE FOREST"}, "HIDE IN THE FOREST");
 LevelInfo level4 = new LevelInfo("img/sehir.jpg",
@@ -77,6 +77,10 @@ LevelInfo level4 = new LevelInfo("img/sehir.jpg",
         Button button2 = new Button(levelInfo.getOptionTexts()[1]);
         Button button3 = new Button(levelInfo.getOptionTexts()[2]);
 
+        button1.setFont(Font.loadFont("file:font/OldNewspaperTypes.ttf",15));
+        button2.setFont(Font.loadFont("file:font/OldNewspaperTypes.ttf",15));
+        button3.setFont(Font.loadFont("file:font/OldNewspaperTypes.ttf",15));
+
         button1.setOnAction(wrongChoice);
         button2.setOnAction(wrongChoice);
         button3.setOnAction(wrongChoice);
@@ -92,7 +96,7 @@ LevelInfo level4 = new LevelInfo("img/sehir.jpg",
         Image levelImage = new Image(imageFile);
         BackgroundImage backgroundImage = new BackgroundImage(levelImage, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, new BackgroundSize(700,700,false,false,true,true));
         Text text= new Text("FINALLY! FREEDOM!\nYou made the right choices and you're no longer in danger.\nNow you can live far from this land, seeing the sunlight.\nEnjoy your freedom!");
-        text.setFont(Font.loadFont("file:font/Welbut.ttf",12));
+        text.setFont(Font.loadFont("file:font/OldNewspaperTypes.ttf",20));
         text.setFill(Color.BLACK);
         // text.setStyle("-fx-font-weight: bold");
         text.setTextAlignment(TextAlignment.CENTER);
@@ -142,6 +146,7 @@ LevelInfo level4 = new LevelInfo("img/sehir.jpg",
  //       muteButton.textProperty().bind(AudioPlay.muteCondition);
         muteButton.setLayoutX(20);
         muteButton.setLayoutY(20);
+        muteButton.setFont(Font.loadFont("file:font/OldNewspaperTypes.ttf",15));
         muteButton.setOnMousePressed(e -> {
             AudioPlay.mute();
             muteButton.setText(AudioPlay.muteCondition);
@@ -155,7 +160,7 @@ LevelInfo level4 = new LevelInfo("img/sehir.jpg",
         vbox.setAlignment(Pos.TOP_CENTER);
         thepane.getChildren().add(vbox);
         thepane.setPadding(new Insets(100,100,100,100));
-        vbox.getChildren().addAll(currentLives(noOfLives,crntLives), levelText(lvltxt), levelOptions(b1, b2, b3),muteButton);
+        vbox.getChildren().addAll(currentLives(noOfLives,crntLives), levelText(lvltxt), levelOptions(b1, b2, b3, muteButton));
         vbox.setPadding(new Insets(15));
     }
 
@@ -176,11 +181,11 @@ LevelInfo level4 = new LevelInfo("img/sehir.jpg",
 
 
 
-    public VBox levelOptions(Button first, Button mid, Button last) {
+    public VBox levelOptions(Button first, Button mid, Button last, Button mute) {
         VBox forButtons= new VBox();
-        forButtons.getChildren().addAll(first, mid, last);
+        forButtons.getChildren().addAll(first, mid, last, mute);
         forButtons.setAlignment(Pos.CENTER);
-        forButtons.setSpacing(50);
+        forButtons.setSpacing(30);
 
         return forButtons;
     }
@@ -202,21 +207,15 @@ LevelInfo level4 = new LevelInfo("img/sehir.jpg",
 
     public HBox levelText(String situation){
         Text text= new Text(situation);
-        text.setFont(Font.loadFont("file:font/Welbut.ttf",12));
+        text.setFont(Font.loadFont("file:font/OldNewspaperTypes.ttf",15));
         text.setFill(Color.BLACK);
         HBox fortext= new HBox();
         fortext.setStyle("-fx-padding:10");
         fortext.setAlignment(Pos.CENTER);
         fortext.getChildren().add(text);
-        BackgroundSize boxSize = new BackgroundSize(200, 200, true, true, true, true);
-        BackgroundImage imageBackground = new BackgroundImage(new Image(new File("img/1216.png").toURI().toString()),
-                BackgroundRepeat.NO_REPEAT,
-                BackgroundRepeat.NO_REPEAT,
-                BackgroundPosition.DEFAULT,
-                boxSize);
-      //  fortext.setBackground(new Background(imageBackground));
+        // BackgroundSize boxSize = new BackgroundSize(200, 200, true, true, true, true);
 
-         fortext.setBackground(new Background(new BackgroundFill(Color.GRAY, CornerRadii.EMPTY, Insets.EMPTY)));
+         fortext.setBackground(new Background(new BackgroundFill(Color.LIGHTSLATEGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
         return fortext;
     }
 
@@ -244,7 +243,7 @@ LevelInfo level4 = new LevelInfo("img/sehir.jpg",
     EventHandler<ActionEvent> wrongChoice = e -> {
         if (noOfLives>1 ){
             if(!wrongTxt){
-                getLevelInfo(currentLevel).setLevelText(getLevelInfo(currentLevel).getLevelText()+"\n\n WRONG MOVE! TRY AGAIN!");
+                getLevelInfo(currentLevel).setLevelText(getLevelInfo(currentLevel).getLevelText()+"\n\n THAT WAS THE WRONG CHOICE. YOU LOST A LIFE.");
                 wrongTxt= true;
             }
             try {
