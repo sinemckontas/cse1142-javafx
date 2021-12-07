@@ -92,7 +92,9 @@ LevelInfo level4 = new LevelInfo("img/sehir.jpg",
         Image levelImage = new Image(imageFile);
         BackgroundImage backgroundImage = new BackgroundImage(levelImage, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, new BackgroundSize(700,700,false,false,true,true));
         Text text= new Text("FINALLY! FREEDOM!\nYou made the right choices and you're no longer in danger.\nNow you can live far from this land, seeing the sunlight.\nEnjoy your freedom!");
-        text.setStyle("-fx-font-weight: bold");
+        text.setFont(Font.loadFont("file:font/Welbut.ttf",12));
+        text.setFill(Color.RED);
+        // text.setStyle("-fx-font-weight: bold");
         text.setTextAlignment(TextAlignment.CENTER);
 
         StackPane spane= new StackPane();
@@ -200,21 +202,21 @@ LevelInfo level4 = new LevelInfo("img/sehir.jpg",
 
     public HBox levelText(String situation){
         Text text= new Text(situation);
-     //   text.setStyle("-fx-font-weight: bold");
         text.setFont(Font.loadFont("file:font/Welbut.ttf",12));
+        text.setFill(Color.BLACK);
         HBox fortext= new HBox();
         fortext.setStyle("-fx-padding:10");
         fortext.setAlignment(Pos.CENTER);
         fortext.getChildren().add(text);
-        BackgroundSize boxSize = new BackgroundSize(300, 200, true, true, false, false);
+        BackgroundSize boxSize = new BackgroundSize(200, 200, true, true, true, true);
         BackgroundImage imageBackground = new BackgroundImage(new Image(new File("img/1216.png").toURI().toString()),
                 BackgroundRepeat.NO_REPEAT,
                 BackgroundRepeat.NO_REPEAT,
                 BackgroundPosition.DEFAULT,
                 boxSize);
-        fortext.setBackground(new Background(imageBackground));
+      //  fortext.setBackground(new Background(imageBackground));
 
-     //    fortext.setBackground(new Background(new BackgroundFill(Color.ANTIQUEWHITE, CornerRadii.EMPTY, Insets.EMPTY)));
+         fortext.setBackground(new Background(new BackgroundFill(Color.GRAY, CornerRadii.EMPTY, Insets.EMPTY)));
         return fortext;
     }
 
