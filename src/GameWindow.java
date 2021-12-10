@@ -57,7 +57,7 @@ LevelInfo level4 = new LevelInfo("img/sehir.jpg",
         mainStage = primaryStage;
         primaryStage.setScene(generateLevel(currentLevel));
         primaryStage.setResizable(false);
-        primaryStage.setTitle("Dungeon");
+        primaryStage.setTitle("Little Adventure");
         primaryStage.show();
 
 
