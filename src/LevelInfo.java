@@ -4,6 +4,8 @@ public class LevelInfo {
     private String[] optionTexts;
     private String correctOption;
 
+    //CONSTRUCTING LEVELS
+
     public LevelInfo(String backgroundImagePath, String levelText, String[] optionTexts, String correctOption) {
         this.backgroundImagePath = backgroundImagePath;
         this.levelText = levelText;

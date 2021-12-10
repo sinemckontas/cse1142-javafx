@@ -1,7 +1,8 @@
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-
 import java.io.File;
+
+//THIS CLASS IS USED SOLELY FOR THE GAME THEME MUSIC
 
 public class AudioPlay<muteCondition> {
 
@@ -19,7 +20,6 @@ public class AudioPlay<muteCondition> {
             AudioPlay.muteCondition = "UNMUTE";
         }
     }
-
 
      static void play(MediaPlayer playerInput){
         playerInput.play();

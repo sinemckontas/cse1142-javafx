@@ -1,39 +1,25 @@
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.geometry.Side;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
-import javafx.scene.text.FontWeight;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.scene.text.Text;
 import javafx.scene.text.Font;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 
-import java.util.Arrays;
-
-import static javafx.scene.text.FontWeight.BOLD;
-//import javax.xml.soap.Text;
-
 
 public class GameWindow extends Application {
 
+    //PUTTING IN TEXTS, OPTIONS AND BACKGROUNDS OF LEVELS
 Stage mainStage;
 int currentLevel = 1;
 int noOfLives=3;
@@ -60,8 +46,9 @@ LevelInfo level4 = new LevelInfo("img/sehir.jpg",
         primaryStage.setTitle("Little Adventure");
         primaryStage.show();
 
-
     }
+
+    //SETTING UP THE LEVEL GUI
 
     public Scene generateLevel(int levelNo) throws FileNotFoundException {
         LevelInfo levelInfo = getLevelInfo(levelNo);
@@ -91,6 +78,8 @@ LevelInfo level4 = new LevelInfo("img/sehir.jpg",
         return new Scene(canvas, 700, 700);
     }
 
+    //WINNING SCREEN
+
     public Scene winner() throws FileNotFoundException {
         FileInputStream imageFile = new FileInputStream("img/win.jpg");
         Image levelImage = new Image(imageFile);
@@ -109,6 +98,8 @@ LevelInfo level4 = new LevelInfo("img/sehir.jpg",
         return new Scene(spane, 700, 700);
     }
 
+    //LOSING SCREEN
+
     public Scene loser() throws FileNotFoundException {
         FileInputStream imageFile = new FileInputStream("img/youdied.png");
         Image levelImage = new Image(imageFile);
@@ -119,6 +110,7 @@ LevelInfo level4 = new LevelInfo("img/sehir.jpg",
 
         return new Scene(spane, 700, 700);
     }
+
 
     public LevelInfo getLevelInfo(int levelNo) {
         if (levelNo == 1) {
@@ -138,12 +130,13 @@ LevelInfo level4 = new LevelInfo("img/sehir.jpg",
     }
 
 
+    //PLACING ELEMENTS ON LEVEL SCREEN
 
     public void levelCreation(Pane thepane,BackgroundImage bck, Image crntLives, String lvltxt, Button b1, Button b2, Button b3){
         AudioPlay.play(AudioPlay.mainPlayer);
         AudioPlay.muteCondition = "MUTE";
         Button muteButton = new Button(AudioPlay.muteCondition);
- //       muteButton.textProperty().bind(AudioPlay.muteCondition);
+        //muteButton.textProperty().bind(AudioPlay.muteCondition);
         muteButton.setLayoutX(20);
         muteButton.setLayoutY(20);
         muteButton.setFont(Font.loadFont("file:font/OldNewspaperTypes.ttf",15));
@@ -164,6 +157,9 @@ LevelInfo level4 = new LevelInfo("img/sehir.jpg",
         vbox.setPadding(new Insets(15));
     }
 
+
+    //CHECK IF THE BUTTON PRESSED INVOLVES THE CORRECT ANSWER
+
     public Button checkCorrect (String cB,Button fB,Button sB,Button tB){
         if (cB.equalsIgnoreCase(fB.getText())){
             return fB;
@@ -181,6 +177,8 @@ LevelInfo level4 = new LevelInfo("img/sehir.jpg",
 
 
 
+    //ARRANGING OPTIONS BUTTONS (MUTE BUTTON IS PUT HERE WITH THE OPTIONS IN ORDER TO ACHIEVE A TIDIER SCREEN)
+
     public VBox levelOptions(Button first, Button mid, Button last, Button mute) {
         VBox forButtons= new VBox();
         forButtons.getChildren().addAll(first, mid, last, mute);
@@ -189,6 +187,8 @@ LevelInfo level4 = new LevelInfo("img/sehir.jpg",
 
         return forButtons;
     }
+
+    //PLACING LIVES ON THE TOP RIGHT CORNER OF THE SCREEN
 
     public HBox currentLives(int howmanylives, Image hearts){
         int i=0;
@@ -205,7 +205,20 @@ LevelInfo level4 = new LevelInfo("img/sehir.jpg",
         return hBox;
     }
 
+    //CREATING THE TEXT BOX IN LEVELS
+
     public HBox levelText(String situation){
+        FileInputStream boxfile = null;
+        try {
+            boxfile = new FileInputStream("img/ppr.jpg");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        Image tbbg = new Image(boxfile);
+        BackgroundImage bg = new BackgroundImage(tbbg,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.DEFAULT, new BackgroundSize(700,700,false,false,true,true) );
         Text text= new Text(situation);
         text.setFont(Font.loadFont("file:font/OldNewspaperTypes.ttf",15));
         text.setFill(Color.BLACK);
@@ -213,12 +226,11 @@ LevelInfo level4 = new LevelInfo("img/sehir.jpg",
         fortext.setStyle("-fx-padding:10");
         fortext.setAlignment(Pos.CENTER);
         fortext.getChildren().add(text);
-        // BackgroundSize boxSize = new BackgroundSize(200, 200, true, true, true, true);
-
-         fortext.setBackground(new Background(new BackgroundFill(Color.LIGHTSLATEGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
+        fortext.setBackground(new Background(bg));
         return fortext;
     }
 
+    //EVENT HANDLER FOR WHEN PLAYER PICKS THE CORRECT CHOICE
 
     EventHandler<ActionEvent> correctchoice = e -> {
         wrongTxt=false;
@@ -239,6 +251,8 @@ LevelInfo level4 = new LevelInfo("img/sehir.jpg",
         }
 
     };
+
+    //EVENT HANDLER FOR WHEN PLAYER PICKS THE WRONG CHOICE
 
     EventHandler<ActionEvent> wrongChoice = e -> {
         if (noOfLives>1 ){
