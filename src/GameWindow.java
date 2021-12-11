@@ -11,8 +11,8 @@ import javafx.stage.Stage;
 import javafx.scene.text.Text;
 import javafx.scene.text.Font;
 import javafx.scene.image.ImageView;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.util.Scanner;
+import java.io.*;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 
@@ -45,7 +45,6 @@ LevelInfo level4 = new LevelInfo("img/sehir.jpg",
         primaryStage.setResizable(false);
         primaryStage.setTitle("Little Adventure");
         primaryStage.show();
-
     }
 
     //SETTING UP THE LEVEL GUI
@@ -87,7 +86,6 @@ LevelInfo level4 = new LevelInfo("img/sehir.jpg",
         Text text= new Text("FINALLY! FREEDOM!\nYou made the right choices and you're no longer in danger.\nNow you can live far from this land, seeing the sunlight.\nEnjoy your freedom!");
         text.setFont(Font.loadFont("file:font/OldNewspaperTypes.ttf",20));
         text.setFill(Color.BLACK);
-        // text.setStyle("-fx-font-weight: bold");
         text.setTextAlignment(TextAlignment.CENTER);
 
         StackPane spane= new StackPane();
@@ -136,7 +134,6 @@ LevelInfo level4 = new LevelInfo("img/sehir.jpg",
         AudioPlay.play(AudioPlay.mainPlayer);
         AudioPlay.muteCondition = "MUTE";
         Button muteButton = new Button(AudioPlay.muteCondition);
-        //muteButton.textProperty().bind(AudioPlay.muteCondition);
         muteButton.setLayoutX(20);
         muteButton.setLayoutY(20);
         muteButton.setFont(Font.loadFont("file:font/OldNewspaperTypes.ttf",15));
@@ -153,7 +150,7 @@ LevelInfo level4 = new LevelInfo("img/sehir.jpg",
         vbox.setAlignment(Pos.TOP_CENTER);
         thepane.getChildren().add(vbox);
         thepane.setPadding(new Insets(100,100,100,100));
-        vbox.getChildren().addAll(currentLives(noOfLives,crntLives), levelText(lvltxt), levelOptions(b1, b2, b3, muteButton));
+        vbox.getChildren().addAll(topShelf(noOfLives,crntLives), levelText(lvltxt), levelOptions(b1, b2, b3, muteButton));
         vbox.setPadding(new Insets(15));
     }
 
@@ -188,9 +185,9 @@ LevelInfo level4 = new LevelInfo("img/sehir.jpg",
         return forButtons;
     }
 
-    //PLACING LIVES ON THE TOP RIGHT CORNER OF THE SCREEN
+    //PLACING THE GAME LOAD BUTTON AND LIVES ON THE TOP RIGHT CORNER OF THE SCREEN
 
-    public HBox currentLives(int howmanylives, Image hearts){
+    public HBox topShelf (int howmanylives, Image hearts){
         int i=0;
         ImageView[] liVes= new ImageView[howmanylives];
         for(;i<howmanylives; i++){
@@ -198,11 +195,16 @@ LevelInfo level4 = new LevelInfo("img/sehir.jpg",
             liVes[i].setFitHeight(30);
             liVes[i].setFitWidth(30);
         }
+        HBox bigbox= new HBox();
+        Button loadbut= new Button("LOAD GAME");
+        loadbut.setFont(Font.loadFont("file:font/OldNewspaperTypes.ttf",15));
+        loadbut.setOnAction(loadgame);
         HBox hBox= new HBox();
         hBox.getChildren().addAll(liVes);
-        hBox.setPadding(new Insets(0, 0, 0, 200));
+        hBox.setPadding(new Insets(0, 0, 0, 455));
         hBox.setAlignment(Pos.TOP_RIGHT);
-        return hBox;
+        bigbox.getChildren().addAll(loadbut, hBox);
+        return bigbox;
     }
 
     //CREATING THE TEXT BOX IN LEVELS
@@ -230,6 +232,21 @@ LevelInfo level4 = new LevelInfo("img/sehir.jpg",
         return fortext;
     }
 
+    //SAVE CURRENT LEVEL AND LIVES
+
+    public void saveGame() {
+        PrintWriter writer = null;
+        try {
+            writer = new PrintWriter("LoadGameInfo.txt", "UTF-8");
+        } catch (FileNotFoundException | UnsupportedEncodingException fileNotFoundException) {
+            fileNotFoundException.printStackTrace();
+        }
+        writer.println(currentLevel);
+        writer.println(noOfLives);
+        writer.close();
+
+    }
+
     //EVENT HANDLER FOR WHEN PLAYER PICKS THE CORRECT CHOICE
 
     EventHandler<ActionEvent> correctchoice = e -> {
@@ -238,6 +255,7 @@ LevelInfo level4 = new LevelInfo("img/sehir.jpg",
             currentLevel += 1;
             try {
                 mainStage.setScene(generateLevel(currentLevel));
+                saveGame();
             } catch (FileNotFoundException fileNotFoundException) {
                 fileNotFoundException.printStackTrace();
             }
@@ -263,6 +281,7 @@ LevelInfo level4 = new LevelInfo("img/sehir.jpg",
             try {
                 noOfLives--;
                 mainStage.setScene(generateLevel(currentLevel));
+                saveGame();
             } catch (FileNotFoundException fileNotFoundException) {
                 fileNotFoundException.printStackTrace();
             }
@@ -273,9 +292,27 @@ LevelInfo level4 = new LevelInfo("img/sehir.jpg",
             } catch (FileNotFoundException fileNotFoundException) {
                 fileNotFoundException.printStackTrace();
             }
-
         }
+    };
 
+
+    //FOR WHEN THE PLAYER WANTS TO LOAD THEIR PREVIOUS GAME
+
+    EventHandler<ActionEvent> loadgame = e -> {
+        Scanner fileReader = null;
+        try {
+            fileReader = new Scanner(new File("LoadGameInfo.txt"));
+        } catch (FileNotFoundException fileNotFoundException) {
+            fileNotFoundException.printStackTrace();
+        }
+        currentLevel = fileReader.nextInt();
+        noOfLives = fileReader.nextInt();
+        fileReader.close();
+        try {
+            mainStage.setScene(generateLevel(currentLevel));
+        } catch (FileNotFoundException fileNotFoundException) {
+            fileNotFoundException.printStackTrace();
+        }
 
     };
 
